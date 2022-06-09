@@ -1,5 +1,7 @@
-﻿using TrackManager.DataAccess;
+﻿using System.Linq;
+using TrackManager.DataAccess;
 using TrackManager.DTO;
+using TrackManager.Models;
 using TrackManager.Repositories.Interfaces;
 
 namespace TrackManager.Repositories.Implementations
@@ -21,7 +23,8 @@ namespace TrackManager.Repositories.Implementations
                 PublishDate = row.PublishDate,
                 Tracks = row.Tracks.Select(row => new TrackDTO { TrackName = row.TrackName, Duration = row.Duration }),
                 MusicLabel = musicLabel
-            });
+            }).OrderByDescending(col => col.PublishDate);
+
 
             if (!albums.Any()) throw new Exception("There is no data");
 
